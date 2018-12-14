@@ -532,7 +532,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 				// Invoke factory processors registered as beans in the context.
 
-				// 首先该方法会进行一个包的扫描、会把加了@ComponentScanner的类进行一个BDMap的注册
+				// 首先该方法会进行一个包的扫描、
+				// 把加了@ComponentScanner注解扫描出来的类进行BD的转换（ScannedGenericBeanDefinition）、最终直接注册BD
 				// 在将加了@Import的类进行一个解析、然后进行BDMap的注册
 				// 能够说明该方法是BeanFactory的实例化方法
 				invokeBeanFactoryPostProcessors(beanFactory);
@@ -547,6 +548,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				initApplicationEventMulticaster();
 
 				// Initialize other special beans in specific context subclasses.
+				// 该方法内部没代码（Spring后续会扩展）
 				onRefresh();
 
 				// Check for listener beans and register them.

@@ -283,7 +283,7 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 
 				// 这里会进判断、因为执行findCandidateComponents方法时
 				// 内部将类通过 ScannedGenericBeanDefinition对象的构造将类进行BD转换
-				// 该对象继承了GenericBeanDefinition、而他又继承了AbstractBeanDefinition
+				// 该对象继承了 GenericBeanDefinition、而他又继承了AbstractBeanDefinition
 				if (candidate instanceof AbstractBeanDefinition) {
 					// 该方法是将BD设置的属性进行填充 Spring首先会将一套默认的属性进行填充、然后在将自定义的属性替换掉默认的属性
 					postProcessBeanDefinition((AbstractBeanDefinition) candidate, beanName);

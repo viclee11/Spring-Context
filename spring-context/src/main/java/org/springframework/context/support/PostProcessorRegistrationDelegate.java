@@ -100,6 +100,8 @@ final class PostProcessorRegistrationDelegate {
 					//将实现了BeanDefinitionRegistryPostProcessor的类 存放List中
 					currentRegistryProcessors.add(beanFactory.getBean(ppName, BeanDefinitionRegistryPostProcessor.class));
 					processedBeans.add(ppName);
+
+					//153行还有注释
 				}
 			}
 
@@ -109,7 +111,7 @@ final class PostProcessorRegistrationDelegate {
 			//将2个BeanDefinitionRegistryPostProcessor类型的List进行合并
 			registryProcessors.addAll(currentRegistryProcessors);
 
-			//调用BD注册器的后置处理器
+			//此处调用实现类BeanDefinitionRegistryPostProcessors接口的扩展方法（ConfigurationClassPostProcessor类的扩展方法）
 			invokeBeanDefinitionRegistryPostProcessors(currentRegistryProcessors, registry);
 
 			currentRegistryProcessors.clear();
@@ -146,7 +148,16 @@ final class PostProcessorRegistrationDelegate {
 			}
 
 			// Now, invoke the postProcessBeanFactory callback of all processors handled so far.
+
+			// 【115行】是解析实现子类的、由于上面已经处理完了子类的扩展方法、到这一步之后开始解析父类的方法、
+			// 此处开始解析实现了BeanFactoryPostProcessor接口的类、
+			// ----->>>>> 其实这里需要注意 解析的类其实只有ConfigurationClassPostProcessor <<<<<-----
+			// 因为该类实现了子类的接口（BeanDefinitionRegistryPostProcessor、但是子类又继承于父类）
+			// 通过断点调试得出的结论是、该方法是执行Spring内部实现了BeanFactoryPostProcessor接口的类
 			invokeBeanFactoryPostProcessors(registryProcessors, beanFactory);
+
+			// 而该类其实是解析我们自己实现接口的类
+			// 【我们自定义的类实现了BeanFactoryPostProcessor接口、会在此处调用我们自定义的方法】
 			invokeBeanFactoryPostProcessors(regularPostProcessors, beanFactory);
 		}
 
