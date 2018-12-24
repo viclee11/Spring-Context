@@ -59,6 +59,7 @@ final class PostProcessorRegistrationDelegate {
 			BeanDefinitionRegistry registry = (BeanDefinitionRegistry) beanFactory;
 
 			// 存放我们自定义的类（实现了BeanFactoryPostProcessor接口的类）
+			// 并且外部调用addBeanFactoryPostProcessor()方法
 			List<BeanFactoryPostProcessor> regularPostProcessors = new ArrayList<>();
 
 			// 存放我们自定义的类（实现了BeanDefinitionRegistryPostProcessor接口的类）
